@@ -16,7 +16,17 @@ namespace OldPhonePad
                 {
                     break; // exit loop
                 }
-                Console.WriteLine("Output: " + OldPhonePad(input));
+                
+                try
+                {
+                    string result = OldPhonePad(input);
+                    Console.WriteLine("Output: " + result);
+                }
+                catch (Exception ex)
+                {
+                    // Handle exception and show the error
+                    Console.WriteLine($"An error occurred: {ex.Message}");
+                }
             } while (true);
         }
 
@@ -24,7 +34,7 @@ namespace OldPhonePad
         {
             StringBuilder output = new StringBuilder();
             char? lastChar = null;
-            int letterRepeatCount = 0;
+            int repeatCount = 0;
 
             foreach (char c in input)
             {
@@ -32,31 +42,39 @@ namespace OldPhonePad
                 {
                     return output.ToString();
                 }
-                else if (c == ' ')
+                else if (c == ' ')  //type two characters from the same button
                 {
-                    letterRepeatCount = 0;
+                    repeatCount = 0;
                 }
                 else if (c == '*')
                 {
-                    output.Remove(output.Length - 1, 1);  // delete last char
+                    // If there's no character to remove, skip the operation
+                    if (output.Length > 0)
+                    {
+                        output.Remove(output.Length - 1, 1);
+                    }
                 }
-                else if (c == lastChar)
+                else if (c >= '0' && c <= '9') // Only process valid input
                 {
-                    letterRepeatCount++;
-                    output.Remove(output.Length - 1, 1);  // delete last char
-                    output.Append(GetKey(c, letterRepeatCount));
-                }
-                else if (c != lastChar)
-                {
-                    letterRepeatCount = 0;
-                    output.Append(GetKey(c, letterRepeatCount));
+                    // If there are repeated numbers other than 0, replace them with new letters.
+                    if (c == lastChar && c != '0')
+                    {
+                        repeatCount++;
+                        output.Remove(output.Length - 1, 1);
+                        output.Append(GetKey(c, repeatCount));
+                    }
+                    else
+                    {
+                        repeatCount = 0;
+                        output.Append(GetKey(c, repeatCount));
+                    }
                 }
                 else
                 {
-                    output.Append(GetKey(c, letterRepeatCount));
+                    throw new ArgumentException("Invalid character entered. Only digits and '*' are allowed.");
                 }
 
-                lastChar = c;
+                    lastChar = c;
             }
 
             output.Clear();
@@ -64,7 +82,7 @@ namespace OldPhonePad
             return output.ToString();
         }
 
-        private static char GetKey(char c, int letterRepeatCount)
+        private static char GetKey(char c, int repeatCount)
         {
             // Define the mapping for the phone keypad
             string[] keypad =
@@ -81,7 +99,7 @@ namespace OldPhonePad
                 "WXYZ"  // 9
             };
 
-            int charIndex = letterRepeatCount % keypad[c - '0'].Length;
+            int charIndex = repeatCount % keypad[c - '0'].Length;
             return keypad[c - '0'][charIndex];
         }
     }
