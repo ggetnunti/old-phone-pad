@@ -56,3 +56,29 @@ Output: TURING
 
 - Invalid characters (anything other than digits, space, or asterisk) will result in an error message:  
   `An error occurred: Invalid character entered. Only digits and '*' are allowed.`
+
+## Unit Testing
+
+This project includes automated unit tests for the `OldPhonePad(string input)` method using the [xUnit](https://xunit.net/) testing framework.
+
+### 🧪 Test Coverage
+
+The unit tests verify the following behaviors:
+
+- ✅ Correct mapping of keypress sequences to letters (e.g. `33#` → `E`)
+- ✅ Handling of repeated key presses and letter cycling (e.g. `2 22 222#` → `ABC`)
+- ✅ Handling of backspace (`*`) correctly (e.g. `227*#` → `B`)
+- ✅ Recognition of space to separate characters from the same key (e.g. `4433555 555666#` → `HELLO`)
+- ✅ Support for all keypad characters including edge cases (e.g. `2222#` → `A`)
+- ✅ Validation of invalid inputs (e.g. `2A2#`, `2-2#`) and appropriate exception handling
+
+### ✅ Running the Tests
+
+1. Navigate to the test project folder:
+
+```bash
+cd OldPhonePad.Tests
+
+2. Run the tests:
+
+dotnet test
