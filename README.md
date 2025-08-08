@@ -74,10 +74,6 @@ The unit tests verify the following behaviors:
 
 ### ✅ Running the Tests
 
-1. Navigate to the test project folder:
+1. Navigate to the test project folder:   cd OldPhonePad.Tests
 
-cd OldPhonePad.Tests
-
-2. Run the tests:
-
-dotnet test
+2. Run the tests:  dotnet test
