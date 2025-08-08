@@ -3,9 +3,9 @@ using System.Text;
 
 namespace OldPhonePad
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             string input = null;
             do
