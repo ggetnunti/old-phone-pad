@@ -76,7 +76,6 @@ The unit tests verify the following behaviors:
 
 1. Navigate to the test project folder:
 
-```bash
 cd OldPhonePad.Tests
 
 2. Run the tests:
